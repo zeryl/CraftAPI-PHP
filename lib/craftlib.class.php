@@ -20,11 +20,13 @@ class craftlib {
 	public function getPlayerNames() {
 		$return = $this->client->player->getPlayerNames();
 		$this->result = $this->client->result;
-		return $this->result;
+		return $this;
 	}
 	
 	public function broadcastMessage($message) {
 		$this->client->player->broadcastMessage($message);
+		$this->result = $this->client->result;
+		return $this;
 	}
 	
 	public function getInventory($player) {
@@ -39,6 +41,6 @@ class craftlib {
 		}
 		$this->result = $newresult;
 		
-		return $this->result;
+		return $this;
 	}
 }

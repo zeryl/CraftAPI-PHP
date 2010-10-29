@@ -13,24 +13,23 @@ echo('<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 ');
 
 require_once('lib/xmlrpc.class.php');
+require_once('lib/craftlib.class.php');
 require_once('lib/minecraft.php');
 
 $url = 'http://zeryl:test@localhost:20012';
-$client = new PrettyXMLRPC($url, new PrettyXMLRPCEpiBackend);
+$client = new craftlib($url);
 
 echo('<pre>');
-$client->player->getPlayerNames();
-print_r($client->result);
+print_r($client->getPlayerNames()->getLastResult());
 echo('</pre>');
 echo('<br>');
 
-echo('Sending message: Test123!');
-$client->player->broadcastMessage('Test123!');
+echo('Sending message: Test123!<br>');
+var_dump($client->broadcastMessage('Test123!')->getLastResult());
 echo('<br>');
 
 echo('Getting Zeryl\'s Inventory');
-$client->player->getInventory('zeryl');
-$result = $client->result;		
+$result = $client->getInventory('zeryl')->getLastResult();
 foreach($result as $key => $value) {
 	$newresult[$key] = $value;
 	if(isset($items[$value['itemID']]))
@@ -40,6 +39,7 @@ echo('<pre>');
 print_r($newresult);
 echo('</pre>');
 
+// TODO: Continue converting these to the class structure.
 echo('Getting player info for Zeryl');
 echo('<br>');
 $client->player->getPlayerInfo('zeryl');
